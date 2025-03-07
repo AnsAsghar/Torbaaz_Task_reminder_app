@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Task Reminder App
 
 ## Description
@@ -171,3 +172,7 @@ Distributed under the MIT License. See LICENSE for more information.
 - [Visual Studio Code Documentation](https://code.visualstudio.com/docs)
 - [GitHub Documentation](https://docs.github.com/en)
 - [Stack Overflow](https://stackoverflow.com/)
+=======
+# Torbaaz_Task_reminder_app
+This an task reminder app that manages user's task
+>>>>>>> 2a563ece52b529d390900c74fa834bd4a1e0a073
