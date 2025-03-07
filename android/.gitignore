@@ -1,5 +1,6 @@
 gradle-wrapper.jar
 /.gradle
+/.cursorrule
 /captures/
 /gradlew
 /gradlew.bat

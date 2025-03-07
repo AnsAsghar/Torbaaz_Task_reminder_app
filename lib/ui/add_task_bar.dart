@@ -24,6 +24,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
   final TaskController _taskController = Get.put(TaskController());
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
+  final TextEditingController _subtaskController = TextEditingController();
+
+  List<SubTask> _subtasks = [];
 
   DateTime _selectedDate = DateTime.now();
   String _startTime = DateFormat("hh:mm a")
@@ -41,6 +44,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
   int _selectedColor = 0;
 
+  bool _isUrgent = false;
+
   @override
   void initState() {
     super.initState();
@@ -54,6 +59,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
       _selectedRemind = widget.task!.remind!;
       _selectedRepeat = widget.task!.repeat!;
       _selectedColor = widget.task!.color!;
+      _isUrgent = widget.task!.isUrgent;
+      _subtasks = List.from(widget.task!.subtasks);
     }
 
     DeviceInfo deviceInfo = DeviceInfo();
@@ -77,6 +84,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
             children: [
               _titleBar(),
               _inputField(),
+              _urgentCheckbox(),
+              const SizedBox(height: 15),
+              _buildSubtasksSection(),
             ],
           ),
         ),
@@ -395,30 +405,166 @@ class _AddTaskPageState extends State<AddTaskPage> {
     );
   }
 
+  _urgentCheckbox() {
+    return Row(
+      children: [
+        Checkbox(
+          value: _isUrgent,
+          onChanged: (value) {
+            setState(() {
+              _isUrgent = value!;
+            });
+          },
+        ),
+        const Text('Mark as Urgent'),
+      ],
+    );
+  }
+
+  Widget _buildSubtasksSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Subtasks",
+          style: titleStyle,
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: _subtaskController,
+                decoration: InputDecoration(
+                  hintText: "Add a subtask",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            IconButton(
+              onPressed: () {
+                if (_subtaskController.text.isNotEmpty) {
+                  setState(() {
+                    _subtasks.add(SubTask(title: _subtaskController.text));
+                    _subtaskController.clear();
+                  });
+                }
+              },
+              icon: const Icon(Icons.add),
+              style: IconButton.styleFrom(
+                backgroundColor: primaryColor,
+                foregroundColor: Colors.white,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 15),
+        if (_subtasks.isNotEmpty)
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey.shade300),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: _subtasks.length,
+              separatorBuilder: (context, index) => const Divider(),
+              itemBuilder: (context, index) {
+                return Row(
+                  children: [
+                    Checkbox(
+                      value: _subtasks[index].isCompleted,
+                      onChanged: (value) {
+                        setState(() {
+                          _subtasks[index].isCompleted = value!;
+                        });
+                      },
+                    ),
+                    Expanded(
+                      child: Text(_subtasks[index].title),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                      onPressed: () {
+                        setState(() {
+                          _subtasks.removeAt(index);
+                        });
+                      },
+                    ),
+                  ],
+                );
+              },
+            ),
+          )
+        else
+          const Text("No subtasks added yet"),
+      ],
+    );
+  }
+
   void _addTaskToDb() async {
     Task task = Task(
       id: widget.task?.id,
       title: _titleController.text,
       note: _noteController.text,
-      date: DateFormat.yMd().format(_selectedDate),
+      date: DateFormat('M/d/yyyy').format(_selectedDate),
       startTime: _startTime,
       endTime: _endTime,
       remind: _selectedRemind,
       repeat: _selectedRepeat,
       color: _selectedColor,
       isCompleted: widget.task?.isCompleted ?? 0,
-      createdAt:
-          widget.task?.createdAt ?? DateFormat.yMd().format(DateTime.now()),
-      updatedAt: DateFormat.yMd().format(DateTime.now()),
+      createdAt: widget.task?.createdAt ?? DateTime.now().toIso8601String(),
+      updatedAt: DateTime.now().toIso8601String(),
+      completedAt: widget.task?.completedAt,
+      isUrgent: _isUrgent,
+      subtasks: _subtasks,
+      progress: widget.task?.progress ?? 0,
     );
+
+    print("Adding/updating task: ${task.title}");
+    print(
+        "Date: ${task.date}, Start time: ${task.startTime}, End time: ${task.endTime}");
+    print("Remind: ${task.remind}, Repeat: ${task.repeat}");
 
     if (widget.task == null) {
       // Add a new task to the database
-      await _taskController.addTask(task: task);
+      int id = await _taskController.addTask(task: task);
+      print("Task added with ID: $id");
+
+      // Show success message
+      Get.snackbar(
+        "Success",
+        "Task added successfully!",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 2),
+      );
     } else {
       // Update the existing task in the database
       await _taskController.updateTaskInfo(task);
+      print("Task updated with ID: ${task.id}");
+
+      // Show success message
+      Get.snackbar(
+        "Success",
+        "Task updated successfully!",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 2),
+      );
     }
+
+    // Refresh the task list
+    _taskController.getTasks();
+
     // Navigate back to the task list
     Get.back();
   }
