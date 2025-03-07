@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:todo_apps/models/task.dart';
-import 'package:todo_apps/theme/theme.dart';
+import 'package:torbaaz_reminder_app/models/task.dart';
+import 'package:torbaaz_reminder_app/theme/theme.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class TaskTile extends StatelessWidget {

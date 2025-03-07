@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:permission_handler/permission_handler.dart';
-import 'package:todo_apps/models/task.dart';
+import 'package:torbaaz_reminder_app/models/task.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
-import 'package:todo_apps/ui/notification_detail_page.dart';
+import 'package:torbaaz_reminder_app/ui/notification_detail_page.dart';
 
 class NotifyHelper {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:todo_apps/controllers/task.controller.dart';
-import 'package:todo_apps/db/db.helper.dart';
-import 'package:todo_apps/models/task.dart';
-import 'package:todo_apps/services/theme_services.dart';
-import 'package:todo_apps/theme/theme.dart';
-import 'package:todo_apps/ui/home_page.dart';
-import 'package:todo_apps/ui/full_screen_alarm.dart';
+import 'package:torbaaz_reminder_app/controllers/task.controller.dart';
+import 'package:torbaaz_reminder_app/db/db.helper.dart';
+import 'package:torbaaz_reminder_app/models/task.dart';
+import 'package:torbaaz_reminder_app/services/theme_services.dart';
+import 'package:torbaaz_reminder_app/theme/theme.dart';
+import 'package:torbaaz_reminder_app/ui/home_page.dart';
+import 'package:torbaaz_reminder_app/ui/full_screen_alarm.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

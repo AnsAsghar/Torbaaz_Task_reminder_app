@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_apps/theme/theme.dart';
+import 'package:torbaaz_reminder_app/theme/theme.dart';
 
 class MyInputField extends StatelessWidget {
   final String title;

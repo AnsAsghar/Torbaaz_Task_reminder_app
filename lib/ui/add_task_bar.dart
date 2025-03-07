@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_apps/controllers/device_info.dart';
-import 'package:todo_apps/controllers/task.controller.dart';
-import 'package:todo_apps/models/task.dart';
-import 'package:todo_apps/theme/theme.dart';
-import 'package:todo_apps/ui/widgets/button.dart';
-import 'package:todo_apps/ui/widgets/input_field.dart';
+import 'package:torbaaz_reminder_app/controllers/device_info.dart';
+import 'package:torbaaz_reminder_app/controllers/task.controller.dart';
+import 'package:torbaaz_reminder_app/models/task.dart';
+import 'package:torbaaz_reminder_app/theme/theme.dart';
+import 'package:torbaaz_reminder_app/ui/widgets/button.dart';
+import 'package:torbaaz_reminder_app/ui/widgets/input_field.dart';
 
 class AddTaskPage extends StatefulWidget {
   final Task? task;

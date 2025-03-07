@@ -4,7 +4,7 @@ import 'package:excel/excel.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
-import 'package:todo_apps/models/task.dart';
+import 'package:torbaaz_reminder_app/models/task.dart';
 
 Future<void> exportTasksToExcel(List<Task> tasks) async {
   List<String> colors = ["primaryColor", "red", "yellow", "black"];

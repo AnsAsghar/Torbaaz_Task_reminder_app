@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:todo_apps/models/task.dart';
+import 'package:torbaaz_reminder_app/models/task.dart';
 import 'package:get_storage/get_storage.dart';
 
 class DBHelper {

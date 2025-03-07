@@ -1,7 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:todo_apps/db/db.helper.dart';
-import 'package:todo_apps/models/task.dart';
+import 'package:torbaaz_reminder_app/db/db.helper.dart';
+import 'package:torbaaz_reminder_app/models/task.dart';
 
 class TaskController extends GetxController {
   var taskList = <Task>[].obs;

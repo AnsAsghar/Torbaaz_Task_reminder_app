@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:todo_apps/models/task.dart';
+import 'package:torbaaz_reminder_app/models/task.dart';
 
 Future<void> exportTasksToPDF(List<Task> tasks) async {
   final pdf = pw.Document();

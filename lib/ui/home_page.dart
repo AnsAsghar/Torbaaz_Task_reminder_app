@@ -6,18 +6,18 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_apps/controllers/device_info.dart';
-import 'package:todo_apps/controllers/task.controller.dart';
-import 'package:todo_apps/models/task.dart';
-import 'package:todo_apps/services/csv_services.dart';
-import 'package:todo_apps/services/excel_services.dart';
-import 'package:todo_apps/services/notification_services.dart';
-import 'package:todo_apps/services/pdf_services.dart';
-import 'package:todo_apps/services/theme_services.dart';
-import 'package:todo_apps/theme/theme.dart';
-import 'package:todo_apps/ui/add_task_bar.dart';
-import 'package:todo_apps/ui/widgets/button.dart';
-import 'package:todo_apps/ui/widgets/task_tile.dart';
+import 'package:torbaaz_reminder_app/controllers/device_info.dart';
+import 'package:torbaaz_reminder_app/controllers/task.controller.dart';
+import 'package:torbaaz_reminder_app/models/task.dart';
+import 'package:torbaaz_reminder_app/services/csv_services.dart';
+import 'package:torbaaz_reminder_app/services/excel_services.dart';
+import 'package:torbaaz_reminder_app/services/notification_services.dart';
+import 'package:torbaaz_reminder_app/services/pdf_services.dart';
+import 'package:torbaaz_reminder_app/services/theme_services.dart';
+import 'package:torbaaz_reminder_app/theme/theme.dart';
+import 'package:torbaaz_reminder_app/ui/add_task_bar.dart';
+import 'package:torbaaz_reminder_app/ui/widgets/button.dart';
+import 'package:torbaaz_reminder_app/ui/widgets/task_tile.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter/services.dart';
 
@@ -167,12 +167,12 @@ class _HomePageState extends State<HomePage> {
     final tasksForToday = tasks.where((task) {
       final selectedDateStr = DateFormat('M/d/yyyy').format(DateTime.now());
 
-      return task.date == selectedDateStr ||
-          task.repeat == "Daily" ||
-          (task.repeat == "Weekly" &&
+      return task?.date == selectedDateStr ||
+          task?.repeat == "Daily" ||
+          (task?.repeat == "Weekly" &&
               DateFormat('EEEE').format(DateTime.now()) ==
                   DateFormat('EEEE')
-                      .format(DateFormat('M/d/yyyy').parse(task.date!)));
+                      .format(DateFormat('M/d/yyyy').parse(task?.date ?? "")));
     }).toList();
 
     if (tasksForToday.isEmpty) {
@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
         body: "No tasks scheduled for today. Have a great day!",
       );
     } else {
-      final taskTitles = tasksForToday.map((t) => t.title).join(", ");
+      final taskTitles = tasksForToday.map((t) => t?.title).join(", ");
       notifyHelper.displayNotification(
         title: "Daily Task Reminder",
         body: "You have ${tasksForToday.length} tasks today: $taskTitles",
@@ -283,7 +283,7 @@ class _HomePageState extends State<HomePage> {
     return Obx(() {
       final tasks = _taskController.taskList;
       int totalTasks = tasks.length;
-      int completedTasks = tasks.where((task) => task.isCompleted == 1).length;
+      int completedTasks = tasks.where((task) => task?.isCompleted == 1).length;
       double progress =
           totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
@@ -339,8 +339,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   _urgentTasks() {
-    List<Task> urgentTasks =
-        filterTaskList.where((task) => task.remind! <= 5).toList();
+    List<Task> urgentTasks = filterTaskList
+        .where((task) => task.remind != null && task.remind! <= 5)
+        .toList();
 
     return Container(
       margin: const EdgeInsets.all(20),
@@ -537,59 +538,59 @@ class _HomePageState extends State<HomePage> {
   _showTasks() {
     return Obx(() {
       List<Task> tasksForSelectedDate = [];
-      
+
       // _selectedDate is already a DateTime object, no need to parse it
       DateTime selectedDate = _selectedDate;
-      
+
       // First, filter tasks specifically for the selected date
       for (var task in _taskController.taskList) {
         // Parse the task date string to DateTime
         DateTime taskDate;
         try {
-          taskDate = DateFormat('M/d/yyyy').parse(task.date!);
+          taskDate = DateFormat('M/d/yyyy').parse(task?.date ?? "");
         } catch (e) {
           try {
-            taskDate = DateFormat('MM/dd/yyyy').parse(task.date!);
+            taskDate = DateFormat('MM/dd/yyyy').parse(task?.date ?? "");
           } catch (e) {
-            print("Error parsing date: ${task.date}, error: ${e}");
+            print("Error parsing date: ${task?.date}, error: ${e}");
             continue; // Skip this task if date can't be parsed
           }
         }
-        
+
         bool shouldInclude = false;
-        
+
         // Exact date match - compare year, month, and day
-        if (taskDate.year == selectedDate.year && 
-            taskDate.month == selectedDate.month && 
+        if (taskDate.year == selectedDate.year &&
+            taskDate.month == selectedDate.month &&
             taskDate.day == selectedDate.day) {
           shouldInclude = true;
-        } 
+        }
         // Check for repeating tasks
-        else if (task.repeat != "None") {
-          if (task.repeat == "Daily") {
+        else if (task?.repeat != "None") {
+          if (task?.repeat == "Daily") {
             shouldInclude = true;
-          } else if (task.repeat == "Weekly" && 
-                    selectedDate.weekday == taskDate.weekday) {
+          } else if (task?.repeat == "Weekly" &&
+              selectedDate.weekday == taskDate.weekday) {
             shouldInclude = true;
-          } else if (task.repeat == "Monthly" && 
-                    selectedDate.day == taskDate.day) {
+          } else if (task?.repeat == "Monthly" &&
+              selectedDate.day == taskDate.day) {
             shouldInclude = true;
           }
         }
-        
+
         // Add task if it matches criteria
         if (shouldInclude && !tasksForSelectedDate.contains(task)) {
           tasksForSelectedDate.add(task);
         }
       }
-      
+
       // Sort tasks by time
       tasksForSelectedDate.sort((a, b) {
-        DateTime aTime = DateFormat('HH:mm').parse(a.startTime!);
-        DateTime bTime = DateFormat('HH:mm').parse(b.startTime!);
+        DateTime aTime = DateFormat('HH:mm').parse(a?.startTime ?? "");
+        DateTime bTime = DateFormat('HH:mm').parse(b?.startTime ?? "");
         return aTime.compareTo(bTime);
       });
-      
+
       // If no tasks, show empty state
       if (tasksForSelectedDate.isEmpty) {
         return Center(
@@ -610,7 +611,7 @@ class _HomePageState extends State<HomePage> {
           ),
         );
       }
-      
+
       // Return task list
       return ListView.builder(
         shrinkWrap: true,
@@ -618,29 +619,29 @@ class _HomePageState extends State<HomePage> {
         itemCount: tasksForSelectedDate.length,
         itemBuilder: (_, index) {
           Task task = tasksForSelectedDate[index];
-          
-          DateTime date = _parseDateTime(task.startTime.toString());
+
+          DateTime date = _parseDateTime(task.startTime ?? "");
           var myTime = DateFormat.Hm().format(date);
-          
+
           var remind = DateFormat.Hm()
-              .format(date.subtract(Duration(minutes: task.remind!)));
-          
+              .format(date.subtract(Duration(minutes: task?.remind ?? 0)));
+
           int mainTaskNotificationId = task.id!.toInt();
-          
-          if (task.remind! > 0) {
+
+          if (task?.remind != null && task.remind! > 0) {
             notifyHelper.remindNotification(
               int.parse(remind.toString().split(":")[0]),
               int.parse(remind.toString().split(":")[1]),
               task,
             );
           }
-          
+
           notifyHelper.scheduledNotification(
             int.parse(myTime.toString().split(":")[0]),
             int.parse(myTime.toString().split(":")[1]),
             task,
           );
-          
+
           return AnimationConfiguration.staggeredList(
             position: index,
             child: SlideAnimation(
@@ -706,7 +707,7 @@ class _HomePageState extends State<HomePage> {
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         // Increase height even more to avoid overflow
-        height: task.isCompleted == 1
+        height: task?.isCompleted == 1
             ? MediaQuery.of(context).size.height * 0.40
             : MediaQuery.of(context).size.height * 0.45,
         color: Get.isDarkMode ? darkGreyColor : Colors.white,
@@ -733,7 +734,7 @@ class _HomePageState extends State<HomePage> {
                 context: context,
                 icon: Icons.update,
               ),
-              task.isCompleted == 1
+              task?.isCompleted == 1
                   ? Container()
                   : _bottomSheetButton(
                       label: "Task Completed",
@@ -794,7 +795,7 @@ class _HomePageState extends State<HomePage> {
               Get.back();
               _taskController.deleteTask(task.id!);
               // Cancel delete notification
-              if (task.remind! > 4) {
+              if (task?.remind != null && task.remind! > 4) {
                 notifyHelper.cancelNotification(task.id! + 1);
               }
               _showTasks();
@@ -912,7 +913,7 @@ class _HomePageState extends State<HomePage> {
     return Obx(() {
       // Get all urgent tasks regardless of date
       List<Task> urgentTasks = _taskController.taskList
-          .where((task) => task.isUrgent == true)
+          .where((task) => task?.isUrgent ?? false)
           .toList();
 
       if (urgentTasks.isEmpty) {
@@ -1050,7 +1051,7 @@ class _HomePageState extends State<HomePage> {
 
     int totalTasks = filterTaskList.length;
     int completedTasks =
-        filterTaskList.where((task) => task.isCompleted == 1).length;
+        filterTaskList.where((task) => task?.isCompleted == 1).length;
     double overallProgress =
         totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
@@ -1066,19 +1067,20 @@ class _HomePageState extends State<HomePage> {
       Task task = filterTaskList[i];
       report += "${i + 1}. ${task.title} - ${task.progress}% complete";
 
-      if (task.isCompleted == 1) {
+      if (task?.isCompleted == 1) {
         report += " (COMPLETED)";
-      } else if (task.isUrgent) {
+      } else if (task?.isUrgent ?? false) {
         report += " (URGENT)";
       }
 
       report += "\n";
-      report += "   Due: ${task.date} at ${task.startTime}\n";
+      report +=
+          "   Due: ${task.date ?? 'No date'} at ${task.startTime ?? 'No time'}\n";
 
-      if (task.subtasks.isNotEmpty) {
+      if (task?.subtasks.isNotEmpty ?? false) {
         report += "   Subtasks:\n";
-        for (int j = 0; j < task.subtasks.length; j++) {
-          SubTask subtask = task.subtasks[j];
+        for (int j = 0; j < (task?.subtasks.length ?? 0); j++) {
+          SubTask subtask = task!.subtasks[j];
           report += "   - ${subtask.title}";
           if (subtask.isCompleted) {
             report += " (done)";

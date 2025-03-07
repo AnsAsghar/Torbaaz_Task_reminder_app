@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:todo_apps/controllers/task.controller.dart';
-import 'package:todo_apps/models/task.dart';
-import 'package:todo_apps/theme/theme.dart';
+import 'package:torbaaz_reminder_app/controllers/task.controller.dart';
+import 'package:torbaaz_reminder_app/models/task.dart';
+import 'package:torbaaz_reminder_app/theme/theme.dart';
 
 class FullScreenAlarm extends StatefulWidget {
   final Task task;
