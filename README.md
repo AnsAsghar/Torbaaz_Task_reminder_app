@@ -36,8 +36,8 @@ A powerful and intuitive task reminder app built with Flutter, designed to help 
 <table>
   <tr>
     <td><img src="screenshots/Screenshot%202025-03-08%20131157.png" alt="Home Screen" width="200"/></td>
-    <td><img src="screenshots/Screenshot%202025-03-08%20131142.png" alt="Add Task" width="200"/></td>
-    <td><img src="screenshots/Screenshot%202025-03-08%20131323.png" alt="Update Task" width="200"/></td>
+    <td><img src="screenshots/Screenshot%202025-03-08%20131142.png" alt="enter your Name" width="200"/></td>
+    <td><img src="screenshots/Screenshot%202025-03-08%20131323.png" alt="Add Task" width="200"/></td>
   </tr>
   <tr>
     <td align="center"><b>Home Screen</b></td>
@@ -45,9 +45,9 @@ A powerful and intuitive task reminder app built with Flutter, designed to help 
     <td align="center"><b>Update Task</b></td>
   </tr>
   <tr>
-    <td><img src="screenshots/Screenshot%202025-03-08%20131336.png" alt="Date List" width="200"/></td>
-    <td><img src="screenshots/Screenshot%202025-03-08%20131355.png" alt="Notification" width="200"/></td>
-    <td><img src="screenshots/Screenshot%202025-03-08%20131515.png" alt="Nav Notification" width="200"/></td>
+    <td><img src="screenshots/Screenshot%202025-03-08%20131336.png" alt="Urgent task option/sub tasks" width="200"/></td>
+    <td><img src="screenshots/Screenshot%202025-03-08%20131355.png" alt="Urgent tasks section" width="200"/></td>
+    <td><img src="screenshots/Screenshot%202025-03-08%20131515.png" alt="All tasks viewer" width="200"/></td>
   </tr>
   <tr>
     <td align="center"><b>Date List View</b></td>
@@ -55,9 +55,9 @@ A powerful and intuitive task reminder app built with Flutter, designed to help 
     <td align="center"><b>Nav Notifications</b></td>
   </tr>
   <tr>
-    <td><img src="screenshots/Screenshot%202025-03-08%20131534.png" alt="Action Modal" width="200"/></td>
+    <td><img src="screenshots/Screenshot%202025-03-08%20131534.png" alt="Add the task for each calender" width="200"/></td>
     <td><img src="screenshots/Screenshot%202025-03-08%20131701.png" alt="Delete and Task Complete" width="200"/></td>
-    <td><img src="screenshots/Screenshot%202025-03-08%20131718.png" alt="Weekly View" width="200"/></td>
+    <td><img src="screenshots/Screenshot%202025-03-08%20131718.png" alt="Weekly View with task progress bar" width="200"/></td>
   </tr>
   <tr>
     <td align="center"><b>Action Modal</b></td>
@@ -66,7 +66,7 @@ A powerful and intuitive task reminder app built with Flutter, designed to help 
   </tr>
   <tr>
     <td colspan="3" align="center">
-      <img src="screenshots/Screenshot%202025-03-08%20131729.png" alt="Task Filter and Export" width="200"/>
+      <img src="screenshots/Screenshot%202025-03-08%20131729.png" alt="Share/export progress report" width="200"/>
       <br>
       <b>Task Filter and Export Options</b>
     </td>
