@@ -500,7 +500,11 @@ class _HomePageState extends State<HomePage> {
       child: DatePicker(
         DateTime.now(),
         height: 125,
+<<<<<<< HEAD
         width: 90,
+=======
+        width: 80,
+>>>>>>> 7dd222f28c37ffdbfb48ce6a33c1be3a8355858e
         initialSelectedDate: DateTime.now(),
         selectionColor: primaryColor,
         selectedTextColor: Colors.white,
@@ -512,7 +516,11 @@ class _HomePageState extends State<HomePage> {
         },
         monthTextStyle: GoogleFonts.lato(
           textStyle: TextStyle(
+<<<<<<< HEAD
             fontSize: width! * 0.035,
+=======
+            fontSize: width! * 0.039,
+>>>>>>> 7dd222f28c37ffdbfb48ce6a33c1be3a8355858e
             fontWeight: FontWeight.w600,
             color: Colors.grey,
           ),
