@@ -1,6 +1,6 @@
 # Torbaaz Task Reminder App 📝
 # Complete Walk through of app ( Youtube video)
-- [Watch complete youtube video for this project!](https://youtu.be/vh4FAc4GbSs))
+- [Watch complete youtube video for this project!](https://youtu.be/vh4FAc4GbSs)
 
 A powerful and intuitive task reminder app built with Flutter, designed to help you manage your tasks efficiently and effectively. ✨
 
